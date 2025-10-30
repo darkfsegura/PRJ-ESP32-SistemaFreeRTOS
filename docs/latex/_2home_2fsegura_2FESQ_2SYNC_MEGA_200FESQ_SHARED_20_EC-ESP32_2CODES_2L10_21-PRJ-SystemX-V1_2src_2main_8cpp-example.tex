@@ -1,0 +1,410 @@
+\doxysection{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}
+\hypertarget{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{}\label{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}Sistema de logging multinivel con filtrado por modo de despliegue.
+
+Sistema de logging multinivel con filtrado por modo de despliegue 
+\begin{DoxyParams}{Parameters}
+{\em level} & Nivel de severidad del mensaje \\
+\hline
+{\em message} & Mensaje a registrar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+
+\begin{DoxyItemize}
+\item Si DEBUG\+\_\+\+MODE == false → solo se imprimen INFO, WARNING, ERROR, TXDATA, TIMING
+\item Si DEBUG\+\_\+\+MODE == true → se imprimen todos los niveles
+\end{DoxyItemize}
+\end{DoxyNote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Sistema\ inicializado\ correctamente"{}});}
+\DoxyCodeLine{\mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}},\ \textcolor{stringliteral}{"{}Variable\ interna:\ "{}}\ +\ String(valor));}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\textcolor{comment}{/*}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ ESP32\ BASIC\ EXAMPLE}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Academic\ License\ –\ Non-\/Commercial,\ Attribution\ Required}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Copyright\ (C)\ 2025\ Fredy\ Segura-\/Quijano,\ Universidad\ de\ los\ Andes}}
+\DoxyCodeLine{\textcolor{comment}{\ *}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Permission\ is\ granted\ to\ use,\ copy,\ modify,\ and\ redistribute\ this\ software\ }}
+\DoxyCodeLine{\textcolor{comment}{\ *\ for\ non-\/commercial\ academic\ purposes,\ provided\ that\ proper\ attribution\ is\ given\ }}
+\DoxyCodeLine{\textcolor{comment}{\ *\ to\ the\ original\ author.\ }}
+\DoxyCodeLine{\textcolor{comment}{\ *}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Commercial\ use\ is\ prohibited\ without\ prior\ written\ permission.}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ This\ software\ is\ provided\ "{}as\ is"{},\ without\ warranty\ of\ any\ kind.}}
+\DoxyCodeLine{\textcolor{comment}{\ *}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Attribution\ requirement:}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Cite\ "{}Fredy\ Segura-\/Quijano,\ Universidad\ de\ los\ Andes,\ 2025"{}\ in\ any\ work\ }}
+\DoxyCodeLine{\textcolor{comment}{\ *\ (publication,\ presentation,\ or\ software)\ using\ this\ code,\ and\ indicate\ }}
+\DoxyCodeLine{\textcolor{comment}{\ *\ any\ modifications\ made.}}
+\DoxyCodeLine{\textcolor{comment}{\ *}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Contact:\ fsegura@uniandes.edu.co}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ Repository:\ github.com/fsegura}}
+\DoxyCodeLine{\textcolor{comment}{\ */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ CONFIGURACIÓN\ DEL\ SISTEMA}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ DEBUG\_MODE\ true}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ COLA\_TAMANO\ 5}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ TIEMPO\_MUESTREO\_TEMP\ 2000}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ TIEMPO\_MUESTREO\_HUM\ 3000}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ TIEMPO\_PROCESAMIENTO\_COLA\ 4000}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ DEFINICIÓN\ DE\ TIPOS\ DE\ DATOS}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{enum}\ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}},\ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a984de77c680eaff141ec910e25568a81}{WARNING}},\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}}\ \ \ \ \ \ }
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{structDatosSensor}{DatosSensor}}\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structDatosSensor_a611f4f290b184e14b1b3ca076734ed35}{temp}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structDatosSensor_a8d083dbc43e4b9a357f7fdd254942578}{hum}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structDatosSensor_aa4c9ab56e967437b601d0f64a6091cc0}{timestamp}};\ }
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ VARIABLES\ GLOBALES\ DEL\ SISTEMA}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}}\ =\ 0.0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}}\ =\ 0.0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{bool}\ \mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\_actualizada}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{bool}\ \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\_actualizada}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ OBJETOS\ FreeRTOS}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{SemaphoreHandle\_t\ \mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{SemaphoreHandle\_t\ \mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{QueueHandle\_t\ \mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ PROTOTIPOS\ DE\ FUNCIONES}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Declaración\ de\ tareas\ FreeRTOS}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_af7236328716099c5a8377996b87ffd0d}{TaskTemperatura}}(\textcolor{keywordtype}{void}\ *pvParameters);\ \ \ \ \ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f}{TaskHumedad}}(\textcolor{keywordtype}{void}\ *pvParameters);\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e}{TaskEnviar}}(\textcolor{keywordtype}{void}\ *pvParameters);\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_af48162eef8344edea5030479f116635f}{TaskProcesarCola}}(\textcolor{keywordtype}{void}\ *pvParameters);\ \ \ \ }
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Funciones\ auxiliares}}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_ac479d4c5bd7115dad8327179d2807292}{mostrarEstadoCola}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}}\ level,\ \textcolor{keyword}{const}\ String\ \&message);\ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7}{inicializarSistema}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a20c47db1814149244be00a806452f62a}{verificarRecursosSistema}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ SISTEMA\ DE\ LOGGING}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}}\ level,\ \textcolor{keyword}{const}\ String\ \&message)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ levels[]\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}DEBUG"{}},\ \textcolor{stringliteral}{"{}INFO"{}},\ \textcolor{stringliteral}{"{}WARNING"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ERROR"{}}}
+\DoxyCodeLine{\ \ \ \ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ show\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ show\ =\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ modo\ completo\ -\/\ todos\ los\ niveles}}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Filtra\ solo\ niveles\ esenciales\ para\ producción}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (level)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a984de77c680eaff141ec910e25568a81}{WARNING}}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ show\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ show\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (show)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[\%s]\ \%s\(\backslash\)n"{}},\ levels[level],\ message.c\_str());}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ FUNCIONES\ AUXILIARES}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_ac479d4c5bd7115dad8327179d2807292}{mostrarEstadoCola}}()\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}}\ !=\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ UBaseType\_t\ espaciosLibres\ =\ uxQueueSpacesAvailable(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ UBaseType\_t\ mensajesEnCola\ =\ uxQueueMessagesWaiting(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ UBaseType\_t\ tamanoTotal\ =\ uxQueueSpacesAvailable(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}})\ +\ uxQueueMessagesWaiting(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[ESTADO\ COLA]\ Mensajes:\ \%d,\ Espacios\ libres:\ \%d,\ Tamaño\ total:\ \%d\(\backslash\)n"{}},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mensajesEnCola,\ espaciosLibres,\ tamanoTotal);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Log\ del\ estado\ (siempre\ visible\ en\ modo\ producción)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ String\ estado\ =\ \textcolor{stringliteral}{"{}Cola:\ "{}}\ +\ String(mensajesEnCola)\ +\ \textcolor{stringliteral}{"{}/"{}}\ +\ String(tamanoTotal)\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ mensajes\ ("{}}\ +\ String(espaciosLibres)\ +\ \textcolor{stringliteral}{"{}\ libres)"{}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ estado);}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Cola\ no\ inicializada"{}});}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a20c47db1814149244be00a806452f62a}{verificarRecursosSistema}}()\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ sistemaOK\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}}\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Fallo\ creación\ mutex"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sistemaOK\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}}\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Fallo\ creación\ semáforo\ envío"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sistemaOK\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}}\ ==\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Fallo\ creación\ cola\ datos"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ sistemaOK\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (sistemaOK)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Todos\ los\ recursos\ FreeRTOS\ inicializados\ correctamente"{}});}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Error\ crítico\ en\ inicialización\ de\ recursos\ -\/\ sistema\ puede\ no\ funcionar"{}});}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7}{inicializarSistema}}()\ \{}
+\DoxyCodeLine{\ \ \ \ Serial.begin(115200);}
+\DoxyCodeLine{\ \ \ \ delay(1000);\ \textcolor{comment}{//\ Espera\ para\ estabilización}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}===\ SISTEMA\ FreeRTOS\ CON\ COLA\ DE\ MENSAJES\ ==="{}});}
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}Autor:\ Tu\ Nombre"{}});}
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}Versión:\ 1.0"{}});}
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}Modo:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}}\ ?\ \textcolor{stringliteral}{"{}DEBUG"{}}\ :\ \textcolor{stringliteral}{"{}PRODUCCIÓN"{}}));}
+\DoxyCodeLine{\ \ \ \ Serial.println(\textcolor{stringliteral}{"{}============================================="{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Inicializando\ sistema..."{}});}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ CONFIGURACIÓN\ PRINCIPAL\ (SETUP)}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}}()\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7}{inicializarSistema}}();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Crear\ recursos\ de\ sincronización\ FreeRTOS}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Creando\ recursos\ de\ sincronización..."{}});}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}}\ =\ xSemaphoreCreateMutex();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}}\ =\ xSemaphoreCreateBinary();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Crear\ cola\ de\ mensajes}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Creando\ cola\ de\ mensajes\ con\ tamaño:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_a76f3097639532ffcbf354c4d735fd539}{COLA\_TAMANO}}));}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}}\ =\ xQueueCreate(\mbox{\hyperlink{main_8cpp_a76f3097639532ffcbf354c4d735fd539}{COLA\_TAMANO}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structDatosSensor}{DatosSensor}}));}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Verificar\ que\ todos\ los\ recursos\ se\ crearon\ correctamente}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a20c47db1814149244be00a806452f62a}{verificarRecursosSistema}}();}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}}\ !=\ NULL)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Cola\ creada\ exitosamente\ -\/\ Capacidad:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_a76f3097639532ffcbf354c4d735fd539}{COLA\_TAMANO}})\ +\ \textcolor{stringliteral}{"{}\ elementos"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_ac479d4c5bd7115dad8327179d2807292}{mostrarEstadoCola}}();\ \textcolor{comment}{//\ Estado\ inicial}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Crear\ tareas\ del\ sistema}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Creando\ tareas\ FreeRTOS..."{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ xTaskCreate(\mbox{\hyperlink{main_8cpp_af7236328716099c5a8377996b87ffd0d}{TaskTemperatura}},\ \textcolor{stringliteral}{"{}LecturaTemp"{}},\ 2048,\ NULL,\ 2,\ NULL);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ xTaskCreate(\mbox{\hyperlink{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f}{TaskHumedad}},\ \textcolor{stringliteral}{"{}LecturaHum"{}},\ 2048,\ NULL,\ 2,\ NULL);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ xTaskCreate(\mbox{\hyperlink{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e}{TaskEnviar}},\ \textcolor{stringliteral}{"{}EnvioDatos"{}},\ 2048,\ NULL,\ 1,\ NULL);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ xTaskCreate(\mbox{\hyperlink{main_8cpp_af48162eef8344edea5030479f116635f}{TaskProcesarCola}},\ \textcolor{stringliteral}{"{}ProcesarCola"{}},\ 2048,\ NULL,\ 1,\ NULL);}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Sistema\ inicializado\ -\/\ Todas\ las\ tareas\ creadas"{}});}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Tareas\ en\ ejecución:\ LecturaTemp(2s),\ LecturaHum(3s),\ ProcesarCola(4s)"{}});}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}}()\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ El\ loop\ queda\ vacío.\ FreeRTOS\ se\ encarga\ de\ la\ ejecución\ de\ tareas.}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Podemos\ agregar\ aquí\ monitoreo\ del\ sistema\ si\ es\ necesario}}
+\DoxyCodeLine{\ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(10000));\ \textcolor{comment}{//\ Pequeña\ pausa\ para\ evitar\ uso\ excesivo\ de\ CPU}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ IMPLEMENTACIÓN\ DE\ TAREAS}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_af7236328716099c5a8377996b87ffd0d}{TaskTemperatura}}(\textcolor{keywordtype}{void}\ *pvParameters)\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Tarea\ de\ temperatura\ iniciada\ -\/\ Periodo:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_a9ed7f1bdc006abb70a225d64930f3a36}{TIEMPO\_MUESTREO\_TEMP}})\ +\ \textcolor{stringliteral}{"{}ms"{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tomar\ el\ mutex\ para\ acceso\ seguro\ a\ variables\ compartidas}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreTake(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}},\ portMAX\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Simular\ lectura\ de\ sensor\ de\ temperatura}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}}\ =\ 24.0\ +\ random(-\/30,\ 30)\ /\ 10.0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\_actualizada}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[TareaTemp]\ Temperatura:\ \%.1f\ °C\(\backslash\)n"{}},\ \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Temperatura:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}},\ 1)\ +\ \textcolor{stringliteral}{"{}\ °C"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Verificar\ si\ podemos\ enviar\ (ambos\ sensores\ actualizados)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\_actualizada}}\ \&\&\ \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\_actualizada}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}},\ \textcolor{stringliteral}{"{}Semáforo\ de\ envío\ activado\ -\/\ ambos\ sensores\ listos"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Liberar\ el\ mutex}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Esperar\ hasta\ próxima\ lectura}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(\mbox{\hyperlink{main_8cpp_a9ed7f1bdc006abb70a225d64930f3a36}{TIEMPO\_MUESTREO\_TEMP}}));}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f}{TaskHumedad}}(\textcolor{keywordtype}{void}\ *pvParameters)\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Tarea\ de\ humedad\ iniciada\ -\/\ Periodo:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_a1701a9c95bcfabe90644b6bdfc53b91d}{TIEMPO\_MUESTREO\_HUM}})\ +\ \textcolor{stringliteral}{"{}ms"{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tomar\ el\ mutex\ para\ acceso\ seguro\ a\ variables\ compartidas}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreTake(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}},\ portMAX\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Simular\ lectura\ de\ sensor\ de\ humedad}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}}\ =\ 60.0\ +\ random(-\/20,\ 20)\ /\ 10.0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\_actualizada}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[TareaHum]\ Humedad:\ \%.1f\ \%\%\(\backslash\)n"{}},\ \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Humedad:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}},\ 1)\ +\ \textcolor{stringliteral}{"{}\ \%"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Verificar\ si\ podemos\ enviar\ (ambos\ sensores\ actualizados)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\_actualizada}}\ \&\&\ \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\_actualizada}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}},\ \textcolor{stringliteral}{"{}Semáforo\ de\ envío\ activado\ -\/\ ambos\ sensores\ listos"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Liberar\ el\ mutex}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Esperar\ hasta\ próxima\ lectura}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(\mbox{\hyperlink{main_8cpp_a1701a9c95bcfabe90644b6bdfc53b91d}{TIEMPO\_MUESTREO\_HUM}}));}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e}{TaskEnviar}}(\textcolor{keywordtype}{void}\ *pvParameters)\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structDatosSensor}{DatosSensor}}\ datos;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Tarea\ de\ envío\ a\ cola\ iniciada"{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Esperar\ a\ que\ ambos\ valores\ estén\ actualizados}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreTake(\mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{xSemaphoreEnvio}},\ portMAX\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}},\ \textcolor{stringliteral}{"{}Semáforo\ de\ envío\ recibido\ -\/\ preparando\ datos\ para\ cola"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Tomar\ el\ mutex\ para\ acceder\ a\ las\ variables\ compartidas}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreTake(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}},\ portMAX\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Preparar\ datos\ para\ la\ cola}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ datos.\mbox{\hyperlink{structDatosSensor_a611f4f290b184e14b1b3ca076734ed35}{temp}}\ =\ \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ datos.\mbox{\hyperlink{structDatosSensor_a8d083dbc43e4b9a357f7fdd254942578}{hum}}\ =\ \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ datos.\mbox{\hyperlink{structDatosSensor_aa4c9ab56e967437b601d0f64a6091cc0}{timestamp}}\ =\ millis();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enviar\ datos\ a\ la\ cola\ (NO\ BLOQUEANTE\ -\/\ timeout\ 0)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xQueueSend(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}},\ \&datos,\ 0)\ ==\ pdTRUE)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Datos\ enviados\ a\ cola:\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}},\ 1)\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}°C\ /\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}},\ 1)\ +\ \textcolor{stringliteral}{"{}\%"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[TareaEnvio]\ Datos\ enviados\ a\ la\ cola\ -\/>\ \%.1f\ °C\ /\ \%.1f\ \%\%\(\backslash\)n"{}},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}},\ \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}},\ \textcolor{stringliteral}{"{}Cola\ llena\ -\/\ no\ se\ pudo\ enviar\ datos:\ "{}}\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String(\mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}},\ 1)\ +\ \textcolor{stringliteral}{"{}°C\ /\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}},\ 1)\ +\ \textcolor{stringliteral}{"{}\%"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Serial.println(\textcolor{stringliteral}{"{}[TareaEnvio]\ ERROR:\ Cola\ llena,\ no\ se\ pudo\ enviar"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Resetear\ flags\ después\ del\ envío\ (exitoso\ o\ no)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\_actualizada}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\_actualizada}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Liberar\ el\ mutex}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{xMutex}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pequeña\ pausa\ para\ simular\ procesamiento\ adicional}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(100));}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8cpp_af48162eef8344edea5030479f116635f}{TaskProcesarCola}}(\textcolor{keywordtype}{void}\ *pvParameters)\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structDatosSensor}{DatosSensor}}\ datosRecibidos;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ contador\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Tarea\ de\ procesamiento\ de\ cola\ iniciada\ -\/\ Tiempo\ procesamiento:\ "{}}\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String(\mbox{\hyperlink{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7}{TIEMPO\_PROCESAMIENTO\_COLA}})\ +\ \textcolor{stringliteral}{"{}ms"{}});}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Esperar\ por\ datos\ en\ la\ cola\ (BLOQUEANTE\ -\/\ se\ activa\ cuando\ hay\ datos)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xQueueReceive(\mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{xColaDatos}},\ \&datosRecibidos,\ portMAX\_DELAY)\ ==\ pdTRUE)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ contador++;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Procesando\ datos\ \#"{}}\ +\ String(contador)\ +\ \textcolor{stringliteral}{"{}:\ "{}}\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String(datosRecibidos.\mbox{\hyperlink{structDatosSensor_a611f4f290b184e14b1b3ca076734ed35}{temp}},\ 1)\ +\ \textcolor{stringliteral}{"{}°C\ /\ "{}}\ +\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ String(datosRecibidos.\mbox{\hyperlink{structDatosSensor_a8d083dbc43e4b9a357f7fdd254942578}{hum}},\ 1)\ +\ \textcolor{stringliteral}{"{}\%"{}}\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ [TS:\ "{}}\ +\ String(datosRecibidos.\mbox{\hyperlink{structDatosSensor_aa4c9ab56e967437b601d0f64a6091cc0}{timestamp}})\ +\ \textcolor{stringliteral}{"{}ms]"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\_MODE}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Serial.printf(\textcolor{stringliteral}{"{}[ProcesarCola]\ Datos\ recibidos:\ \%.1f°C\ /\ \%.1f\%\%\ (TS:\ \%lu\ ms)\(\backslash\)n"{}},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ datosRecibidos.\mbox{\hyperlink{structDatosSensor_a611f4f290b184e14b1b3ca076734ed35}{temp}},\ datosRecibidos.\mbox{\hyperlink{structDatosSensor_a8d083dbc43e4b9a357f7fdd254942578}{hum}},\ datosRecibidos.\mbox{\hyperlink{structDatosSensor_aa4c9ab56e967437b601d0f64a6091cc0}{timestamp}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mostrar\ estado\ cada\ 3\ recepciones}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (contador\ \%\ 3\ ==\ 0)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Procesados\ "{}}\ +\ String(contador)\ +\ \textcolor{stringliteral}{"{}\ paquetes\ de\ datos"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_ac479d4c5bd7115dad8327179d2807292}{mostrarEstadoCola}}();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SIMULAR\ PROCESAMIENTO\ LENTO\ -\/\ Hacer\ esta\ tarea\ más\ lenta\ para\ llenar\ la\ cola}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ En\ sistema\ real,\ aquí\ iría:\ almacenamiento,\ transmisión,\ cálculos,\ etc.}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Iniciando\ procesamiento\ de\ "{}}\ +\ String(\mbox{\hyperlink{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7}{TIEMPO\_PROCESAMIENTO\_COLA}})\ +\ \textcolor{stringliteral}{"{}ms"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ vTaskDelay(pdMS\_TO\_TICKS(\mbox{\hyperlink{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7}{TIEMPO\_PROCESAMIENTO\_COLA}}));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}}(\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}},\ \textcolor{stringliteral}{"{}Procesamiento\ completado"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCodeInclude}
+ 

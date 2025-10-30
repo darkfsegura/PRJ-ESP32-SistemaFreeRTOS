@@ -1,0 +1,27 @@
+<map id="log" name="log">
+<area shape="rect" id="Node000001" title="Sistema de logging." alt="" coords="505,183,544,208"/>
+<area shape="rect" id="Node000002" href="$main_8cpp.html#a9a93e8a67389dba86e41c078dc312eb7" title="Inicialización del sistema." alt="" coords="111,5,235,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="517,170,510,141,498,109,480,77,456,52,431,37,403,25,345,12,287,9,235,11,235,6,287,3,345,7,405,20,433,32,459,48,485,74,503,106,515,140,522,168"/>
+<area shape="rect" id="Node000003" href="$main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="Función de configuración inicial del sistema Arduino." alt="" coords="5,183,60,208"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="512,171,491,130,476,111,456,96,425,85,383,79,335,77,283,79,183,93,141,104,109,116,88,131,70,149,44,184,39,181,66,145,85,127,107,112,139,99,182,88,283,74,335,72,384,74,426,80,459,92,479,107,496,127,517,169"/>
+<area shape="rect" id="Node000004" href="$main_8cpp.html#ac479d4c5bd7115dad8327179d2807292" title="Muestra estado de la cola." alt="" coords="304,107,439,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="494,177,456,154,411,134,413,130,459,149,497,173"/>
+<area shape="rect" id="Node000005" href="$main_8cpp.html#af48162eef8344edea5030479f116635f" title="Tarea de consumo de cola." alt="" coords="108,157,237,183"/>
+<area shape="poly" id="edge12_Node000001_Node000005" title=" " alt="" coords="491,195,457,191,237,176,238,171,458,186,492,189"/>
+<area shape="rect" id="Node000006" href="$main_8cpp.html#a0a20810e0b755938a26f4bdb9c73a01e" title="Tarea de envío a cola." alt="" coords="129,207,216,232"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="492,200,216,219,216,214,491,195"/>
+<area shape="rect" id="Node000007" href="$main_8cpp.html#a951d8aa1e4fad228585e8cc12e93d85f" title="Tarea de lectura de humedad" alt="" coords="119,256,226,281"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="493,210,458,221,334,247,227,264,226,259,333,242,457,215,491,205"/>
+<area shape="rect" id="Node000008" href="$main_8cpp.html#af7236328716099c5a8377996b87ffd0d" title="Tarea de lectura de temperatura." alt="" coords="310,309,433,335"/>
+<area shape="poly" id="edge13_Node000001_Node000008" title=" " alt="" coords="513,222,491,258,459,292,423,312,420,307,456,288,487,255,509,219"/>
+<area shape="rect" id="Node000009" href="$main_8cpp.html#a20c47db1814149244be00a806452f62a" title="Verificación de recursos FreeRTOS." alt="" coords="285,359,457,384"/>
+<area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="522,222,514,251,502,286,484,320,459,349,441,361,438,356,456,345,480,317,497,284,509,250,516,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,39,110,52,84,85,63,122,40,183,35,181,59,120,79,82,106,48,123,35"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="291,119,202,126,154,134,109,147,76,164,50,185,46,180,73,160,107,142,153,129,201,120,290,114"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="308,138,224,160,222,155,307,133"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="95,187,61,193,60,188,94,182"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="115,212,60,203,60,197,116,207"/>
+<area shape="poly" id="edge11_Node000007_Node000003" title=" " alt="" coords="122,253,107,246,50,210,53,206,109,241,125,248"/>
+<area shape="poly" id="edge14_Node000008_Node000003" title=" " alt="" coords="296,331,251,331,202,326,153,315,107,295,82,276,62,253,37,209,42,207,67,250,86,272,109,290,155,310,203,321,252,326,296,326"/>
+<area shape="poly" id="edge16_Node000009_Node000003" title=" " alt="" coords="271,379,230,376,187,368,145,355,106,333,77,305,56,270,42,236,34,209,40,208,47,234,61,268,82,301,110,329,147,350,188,363,231,371,272,374"/>
+</map>

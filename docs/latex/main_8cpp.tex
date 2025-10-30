@@ -1,0 +1,683 @@
+\doxysection{src/main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{src/main.cpp@{src/main.cpp}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=153pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structDatosSensor}{Datos\+Sensor}}
+\begin{DoxyCompactList}\small\item\em Estructura para almacenamiento y transmisión de datos de sensores. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}{DEBUG\+\_\+\+MODE}}~true
+\begin{DoxyCompactList}\small\item\em Habilita logs detallados de depuración cuando es true. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a76f3097639532ffcbf354c4d735fd539}{COLA\+\_\+\+TAMANO}}~5
+\begin{DoxyCompactList}\small\item\em Tamaño máximo de la cola de mensajes. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a9ed7f1bdc006abb70a225d64930f3a36}{TIEMPO\+\_\+\+MUESTREO\+\_\+\+TEMP}}~2000
+\begin{DoxyCompactList}\small\item\em Periodo de muestreo para temperatura en milisegundos. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a1701a9c95bcfabe90644b6bdfc53b91d}{TIEMPO\+\_\+\+MUESTREO\+\_\+\+HUM}}~3000
+\begin{DoxyCompactList}\small\item\em Periodo de muestreo para humedad en milisegundos ~\newline
+ \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7}{TIEMPO\+\_\+\+PROCESAMIENTO\+\_\+\+COLA}}~4000
+\begin{DoxyCompactList}\small\item\em Tiempo de procesamiento simulado para datos de la cola. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}} \{ \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}{DEBUG}}
+, \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}{INFO}}
+, \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a984de77c680eaff141ec910e25568a81}{WARNING}}
+, \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}{ERROR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Niveles de logging disponibles para el sistema. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_af7236328716099c5a8377996b87ffd0d}{Task\+Temperatura}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea de lectura de temperatura. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f}{Task\+Humedad}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea de lectura de humedad ~\newline
+ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e}{Task\+Enviar}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea de envío a cola. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_af48162eef8344edea5030479f116635f}{Task\+Procesar\+Cola}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea de consumo de cola. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ac479d4c5bd7115dad8327179d2807292}{mostrar\+Estado\+Cola}} ()
+\begin{DoxyCompactList}\small\item\em Muestra estado de la cola. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}{log}} (\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}} level, const String \&message)
+\begin{DoxyCompactList}\small\item\em Sistema de logging. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7}{inicializar\+Sistema}} ()
+\begin{DoxyCompactList}\small\item\em Inicialización del sistema. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a20c47db1814149244be00a806452f62a}{verificar\+Recursos\+Sistema}} ()
+\begin{DoxyCompactList}\small\item\em Verificación de recursos Free\+RTOS. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Función de configuración inicial del sistema Arduino. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Bucle principal (vacío) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}{temperatura}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em Último valor de temperatura leído. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{main_8cpp_ab394a2325331757de6eae71b16c435e9}{humedad}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em Último valor de humedad leído. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}{temp\+\_\+actualizada}} = false
+\begin{DoxyCompactList}\small\item\em Flag que indica si la temperatura ha sido actualizada. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}{hum\+\_\+actualizada}} = false
+\begin{DoxyCompactList}\small\item\em Flag que indica si la humedad ha sido actualizada. \end{DoxyCompactList}\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}{x\+Mutex}}
+\begin{DoxyCompactList}\small\item\em Mutex para protección de variables compartidas. \end{DoxyCompactList}\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{main_8cpp_a6f655f04d910fcd6e502bb161804986a}{x\+Semaphore\+Envio}}
+\begin{DoxyCompactList}\small\item\em Semáforo binario para sincronización de envío de datos. \end{DoxyCompactList}\item 
+Queue\+Handle\+\_\+t \mbox{\hyperlink{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}{x\+Cola\+Datos}}
+\begin{DoxyCompactList}\small\item\em Cola de mensajes para comunicación entre tareas de producción y consumo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8cpp_a76f3097639532ffcbf354c4d735fd539}\label{main_8cpp_a76f3097639532ffcbf354c4d735fd539} 
+\index{main.cpp@{main.cpp}!COLA\_TAMANO@{COLA\_TAMANO}}
+\index{COLA\_TAMANO@{COLA\_TAMANO}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{COLA\_TAMANO}{COLA\_TAMANO}}
+{\footnotesize\ttfamily \#define COLA\+\_\+\+TAMANO~5}
+
+
+
+Tamaño máximo de la cola de mensajes. 
+
+\begin{DoxyNote}{Note}
+Valor típico entre 5-\/10 elementos. Ajustar según memoria disponible y tasa de datos 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a}\label{main_8cpp_ac80a3592e72fd96b772ee47a7d8e0d0a} 
+\index{main.cpp@{main.cpp}!DEBUG\_MODE@{DEBUG\_MODE}}
+\index{DEBUG\_MODE@{DEBUG\_MODE}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_MODE}{DEBUG\_MODE}}
+{\footnotesize\ttfamily \#define DEBUG\+\_\+\+MODE~true}
+
+
+
+Habilita logs detallados de depuración cuando es true. 
+
+\begin{DoxyNote}{Note}
+En producción cambiar a false para reducir overhead de comunicación serial 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a1701a9c95bcfabe90644b6bdfc53b91d}\label{main_8cpp_a1701a9c95bcfabe90644b6bdfc53b91d} 
+\index{main.cpp@{main.cpp}!TIEMPO\_MUESTREO\_HUM@{TIEMPO\_MUESTREO\_HUM}}
+\index{TIEMPO\_MUESTREO\_HUM@{TIEMPO\_MUESTREO\_HUM}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TIEMPO\_MUESTREO\_HUM}{TIEMPO\_MUESTREO\_HUM}}
+{\footnotesize\ttfamily \#define TIEMPO\+\_\+\+MUESTREO\+\_\+\+HUM~3000}
+
+
+
+Periodo de muestreo para humedad en milisegundos ~\newline
+ 
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a9ed7f1bdc006abb70a225d64930f3a36}\label{main_8cpp_a9ed7f1bdc006abb70a225d64930f3a36} 
+\index{main.cpp@{main.cpp}!TIEMPO\_MUESTREO\_TEMP@{TIEMPO\_MUESTREO\_TEMP}}
+\index{TIEMPO\_MUESTREO\_TEMP@{TIEMPO\_MUESTREO\_TEMP}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TIEMPO\_MUESTREO\_TEMP}{TIEMPO\_MUESTREO\_TEMP}}
+{\footnotesize\ttfamily \#define TIEMPO\+\_\+\+MUESTREO\+\_\+\+TEMP~2000}
+
+
+
+Periodo de muestreo para temperatura en milisegundos. 
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7}\label{main_8cpp_a159f5f40f02a301f9de14f95d133b5a7} 
+\index{main.cpp@{main.cpp}!TIEMPO\_PROCESAMIENTO\_COLA@{TIEMPO\_PROCESAMIENTO\_COLA}}
+\index{TIEMPO\_PROCESAMIENTO\_COLA@{TIEMPO\_PROCESAMIENTO\_COLA}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TIEMPO\_PROCESAMIENTO\_COLA}{TIEMPO\_PROCESAMIENTO\_COLA}}
+{\footnotesize\ttfamily \#define TIEMPO\+\_\+\+PROCESAMIENTO\+\_\+\+COLA~4000}
+
+
+
+Tiempo de procesamiento simulado para datos de la cola. 
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}\label{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9} 
+\index{main.cpp@{main.cpp}!LogLevel@{LogLevel}}
+\index{LogLevel@{LogLevel}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{LogLevel}{LogLevel}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}}}
+
+
+
+Niveles de logging disponibles para el sistema. 
+
+Define diferentes categorías de mensajes para filtrado selectivo \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEBUG@{DEBUG}!main.cpp@{main.cpp}}\index{main.cpp@{main.cpp}!DEBUG@{DEBUG}}}\Hypertarget{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f}\label{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a0593585da9181e972974c1274d8f2b4f} 
+DEBUG&Mensajes de depuración detallados (solo DEBUG\+\_\+\+MODE) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFO@{INFO}!main.cpp@{main.cpp}}\index{main.cpp@{main.cpp}!INFO@{INFO}}}\Hypertarget{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806}\label{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a748005382152808a72b1a9177d9dc806} 
+INFO&Información general del sistema. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WARNING@{WARNING}!main.cpp@{main.cpp}}\index{main.cpp@{main.cpp}!WARNING@{WARNING}}}\Hypertarget{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a984de77c680eaff141ec910e25568a81}\label{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a984de77c680eaff141ec910e25568a81} 
+WARNING&Advertencias no críticas. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!main.cpp@{main.cpp}}\index{main.cpp@{main.cpp}!ERROR@{ERROR}}}\Hypertarget{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90}\label{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9a2fd6f336d08340583bd620a7f5694c90} 
+ERROR&Errores del sistema. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7}\label{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7} 
+\index{main.cpp@{main.cpp}!inicializarSistema@{inicializarSistema}}
+\index{inicializarSistema@{inicializarSistema}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{inicializarSistema()}{inicializarSistema()}}
+{\footnotesize\ttfamily void inicializar\+Sistema (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Inicialización del sistema. 
+
+Inicializa el sistema y todos sus componentes.
+
+Configura comunicación serial, crea recursos Free\+RTOS y verifica estado \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{main_8cpp_a9a93e8a67389dba86e41c078dc312eb7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a32abad09d9f828a9805862e18ad5da5f}\label{main_8cpp_a32abad09d9f828a9805862e18ad5da5f} 
+\index{main.cpp@{main.cpp}!log@{log}}
+\index{log@{log}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily void log (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main_8cpp_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}}}]{level,  }\item[{const String \&}]{message }\end{DoxyParamCaption})}
+
+
+
+Sistema de logging. 
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a32abad09d9f828a9805862e18ad5da5f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+\index{main.cpp@{main.cpp}!loop@{loop}}
+\index{loop@{loop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Bucle principal (vacío) 
+
+Free\+RTOS maneja la ejecución de tareas mediante el planificador \begin{DoxyNote}{Note}
+No agregar código aquí -\/ usar tareas Free\+RTOS para funcionalidad periódica 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_ac479d4c5bd7115dad8327179d2807292}\label{main_8cpp_ac479d4c5bd7115dad8327179d2807292} 
+\index{main.cpp@{main.cpp}!mostrarEstadoCola@{mostrarEstadoCola}}
+\index{mostrarEstadoCola@{mostrarEstadoCola}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{mostrarEstadoCola()}{mostrarEstadoCola()}}
+{\footnotesize\ttfamily void mostrar\+Estado\+Cola (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Muestra estado de la cola. 
+
+Muestra el estado actual de la cola de mensajes.
+
+Proporciona información sobre uso de la cola para monitoreo del sistema
+
+@metrics
+\begin{DoxyItemize}
+\item Mensajes en cola\+: Número de elementos esperando procesamiento
+\item Espacios libres\+: Capacidad disponible inmediata
+\item Tamaño total\+: Capacidad máxima configurada
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Útil para detectar condiciones de cola llena o posibles pérdidas de datos 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{main_8cpp_ac479d4c5bd7115dad8327179d2807292_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_ac479d4c5bd7115dad8327179d2807292_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+\index{main.cpp@{main.cpp}!setup@{setup}}
+\index{setup@{setup}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Función de configuración inicial del sistema Arduino. 
+
+
+\begin{DoxyItemize}
+\item Inicializa comunicación serial
+\item Crea semáforos y mutex para sincronización
+\item Crea cola de mensajes para comunicación inter-\/tareas
+\item Crea y lanza todas las tareas Free\+RTOS
+\item Verifica integridad del sistema
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Esta función se ejecuta una vez al inicio del programa 
+\end{DoxyNote}
+@task Task\+Temperatura Lectura periódica de sensor de temperatura 
+\begin{DoxyParams}{Parameters}
+{\em stack\+Size} & 2048 bytes \\
+\hline
+{\em priority} & 2 (alta)\\
+\hline
+\end{DoxyParams}
+@task Task\+Humedad ~\newline
+ Lectura periódica de sensor de humedad 
+\begin{DoxyParams}{Parameters}
+{\em stack\+Size} & 2048 bytes ~\newline
+ \\
+\hline
+{\em priority} & 2 (alta)\\
+\hline
+\end{DoxyParams}
+@task Task\+Enviar Envío de datos a la cola cuando ambos sensores están listos 
+\begin{DoxyParams}{Parameters}
+{\em stack\+Size} & 2048 bytes \\
+\hline
+{\em priority} & 1 (media)\\
+\hline
+\end{DoxyParams}
+@task Task\+Procesar\+Cola Consumo y procesamiento de datos desde la cola 
+\begin{DoxyParams}{Parameters}
+{\em stack\+Size} & 2048 bytes \\
+\hline
+{\em priority} & 1 (media)\\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e}\label{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e} 
+\index{main.cpp@{main.cpp}!TaskEnviar@{TaskEnviar}}
+\index{TaskEnviar@{TaskEnviar}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TaskEnviar()}{TaskEnviar()}}
+{\footnotesize\ttfamily void Task\+Enviar (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters }\end{DoxyParamCaption})}
+
+
+
+Tarea de envío a cola. 
+
+Tarea de envío de datos a la cola.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Parameters} & Parámetros de la tarea (no usado)\\
+\hline
+\end{DoxyParams}
+@behavior
+\begin{DoxyItemize}
+\item Espera semáforo que indica datos listos para enviar
+\item Empaqueta datos en estructura \doxylink{structDatosSensor}{Datos\+Sensor}
+\item Envía datos a la cola (no bloqueante)
+\item Maneja condiciones de cola llena
+\item Resetea flags de actualización
+\end{DoxyItemize}
+
+@communication Usa x\+Cola\+Datos para enviar datos a tarea consumidora \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{main_8cpp_a0a20810e0b755938a26f4bdb9c73a01e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f}\label{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f} 
+\index{main.cpp@{main.cpp}!TaskHumedad@{TaskHumedad}}
+\index{TaskHumedad@{TaskHumedad}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TaskHumedad()}{TaskHumedad()}}
+{\footnotesize\ttfamily void Task\+Humedad (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters }\end{DoxyParamCaption})}
+
+
+
+Tarea de lectura de humedad ~\newline
+ 
+
+Tarea de lectura de humedad.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Parameters} & Parámetros de la tarea (no usado)\\
+\hline
+\end{DoxyParams}
+@behavior ~\newline
+
+\begin{DoxyItemize}
+\item Lee humedad simulada cada TIEMPO\+\_\+\+MUESTREO\+\_\+\+HUM ms
+\item Protege acceso a variables compartidas con mutex
+\item Activa semáforo de envío cuando hay datos nuevos de ambos sensores
+\item Incluye logs detallados en modo DEBUG
+\end{DoxyItemize}
+
+@synchronization Usa x\+Mutex para acceso a variables compartidas \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{main_8cpp_a951d8aa1e4fad228585e8cc12e93d85f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_af48162eef8344edea5030479f116635f}\label{main_8cpp_af48162eef8344edea5030479f116635f} 
+\index{main.cpp@{main.cpp}!TaskProcesarCola@{TaskProcesarCola}}
+\index{TaskProcesarCola@{TaskProcesarCola}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TaskProcesarCola()}{TaskProcesarCola()}}
+{\footnotesize\ttfamily void Task\+Procesar\+Cola (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters }\end{DoxyParamCaption})}
+
+
+
+Tarea de consumo de cola. 
+
+Tarea de procesamiento de datos desde la cola.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Parameters} & Parámetros de la tarea (no usado)\\
+\hline
+\end{DoxyParams}
+@behavior
+\begin{DoxyItemize}
+\item Espera indefinidamente por datos en la cola (bloqueante)
+\item Procesa datos recibidos (simulado con delay)
+\item Monitorea estado de la cola periódicamente
+\item Diseñada para ser más lenta que la producción para demostrar llenado de cola
+\end{DoxyItemize}
+
+@performance Ajustar TIEMPO\+\_\+\+PROCESAMIENTO\+\_\+\+COLA para simular diferentes cargas \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp_af48162eef8344edea5030479f116635f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{main_8cpp_af48162eef8344edea5030479f116635f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_af7236328716099c5a8377996b87ffd0d}\label{main_8cpp_af7236328716099c5a8377996b87ffd0d} 
+\index{main.cpp@{main.cpp}!TaskTemperatura@{TaskTemperatura}}
+\index{TaskTemperatura@{TaskTemperatura}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{TaskTemperatura()}{TaskTemperatura()}}
+{\footnotesize\ttfamily void Task\+Temperatura (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters }\end{DoxyParamCaption})}
+
+
+
+Tarea de lectura de temperatura. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pv\+Parameters} & Parámetros de la tarea (no usado)\\
+\hline
+\end{DoxyParams}
+@behavior
+\begin{DoxyItemize}
+\item Lee temperatura simulada cada TIEMPO\+\_\+\+MUESTREO\+\_\+\+TEMP ms
+\item Protege acceso a variables compartidas con mutex
+\item Activa semáforo de envío cuando hay datos nuevos de ambos sensores
+\item Incluye logs detallados en modo DEBUG
+\end{DoxyItemize}
+
+@synchronization Usa x\+Mutex para acceso a variables compartidas \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{main_8cpp_af7236328716099c5a8377996b87ffd0d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{main_8cpp_af7236328716099c5a8377996b87ffd0d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{main_8cpp_a20c47db1814149244be00a806452f62a}\label{main_8cpp_a20c47db1814149244be00a806452f62a} 
+\index{main.cpp@{main.cpp}!verificarRecursosSistema@{verificarRecursosSistema}}
+\index{verificarRecursosSistema@{verificarRecursosSistema}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{verificarRecursosSistema()}{verificarRecursosSistema()}}
+{\footnotesize\ttfamily void verificar\+Recursos\+Sistema (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Verificación de recursos Free\+RTOS. 
+
+Verifica que todos los recursos Free\+RTOS se crearon correctamente.
+
+Realiza verificaciones de inicialización y reporta errores
+
+\begin{DoxyReturn}{Returns}
+true si todos los recursos están OK, false en caso contrario 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{main_8cpp_a20c47db1814149244be00a806452f62a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{main_8cpp_a20c47db1814149244be00a806452f62a_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac}\label{main_8cpp_a50d54178b84b42fb8a9ab1e0acaa8cac} 
+\index{main.cpp@{main.cpp}!hum\_actualizada@{hum\_actualizada}}
+\index{hum\_actualizada@{hum\_actualizada}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{hum\_actualizada}{hum\_actualizada}}
+{\footnotesize\ttfamily hum\+\_\+actualizada = false}
+
+
+
+Flag que indica si la humedad ha sido actualizada. 
+
+\begin{DoxyNote}{Note}
+Se resetea después de enviar los datos a la cola ~\newline
+ 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_ab394a2325331757de6eae71b16c435e9}\label{main_8cpp_ab394a2325331757de6eae71b16c435e9} 
+\index{main.cpp@{main.cpp}!humedad@{humedad}}
+\index{humedad@{humedad}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{humedad}{humedad}}
+{\footnotesize\ttfamily humedad = 0.\+0}
+
+
+
+Último valor de humedad leído. 
+
+\begin{DoxyNote}{Note}
+Variable compartida -\/ requiere protección con mutex 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a2c7fe780b692c078c449752cb090fc6e}\label{main_8cpp_a2c7fe780b692c078c449752cb090fc6e} 
+\index{main.cpp@{main.cpp}!temp\_actualizada@{temp\_actualizada}}
+\index{temp\_actualizada@{temp\_actualizada}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{temp\_actualizada}{temp\_actualizada}}
+{\footnotesize\ttfamily temp\+\_\+actualizada = false}
+
+
+
+Flag que indica si la temperatura ha sido actualizada. 
+
+\begin{DoxyNote}{Note}
+Se resetea después de enviar los datos a la cola 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0}\label{main_8cpp_aa68e0fc8577f270a5009b9eaf46d14d0} 
+\index{main.cpp@{main.cpp}!temperatura@{temperatura}}
+\index{temperatura@{temperatura}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{temperatura}{temperatura}}
+{\footnotesize\ttfamily temperatura = 0.\+0}
+
+
+
+Último valor de temperatura leído. 
+
+\begin{DoxyNote}{Note}
+Variable compartida -\/ requiere protección con mutex 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15}\label{main_8cpp_aa790f7161e459ab25c4a12b7385b4d15} 
+\index{main.cpp@{main.cpp}!xColaDatos@{xColaDatos}}
+\index{xColaDatos@{xColaDatos}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{xColaDatos}{xColaDatos}}
+{\footnotesize\ttfamily x\+Cola\+Datos}
+
+
+
+Cola de mensajes para comunicación entre tareas de producción y consumo. 
+
+Almacena estructuras \doxylink{structDatosSensor}{Datos\+Sensor}. Tamaño definido por COLA\+\_\+\+TAMANO \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf}\label{main_8cpp_a89b891091e9e003d0eab8f6a4ced7dcf} 
+\index{main.cpp@{main.cpp}!xMutex@{xMutex}}
+\index{xMutex@{xMutex}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{xMutex}{xMutex}}
+{\footnotesize\ttfamily x\+Mutex}
+
+
+
+Mutex para protección de variables compartidas. 
+
+Protege acceso a\+: temperatura, humedad, temp\+\_\+actualizada, hum\+\_\+actualizada \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
+\Hypertarget{main_8cpp_a6f655f04d910fcd6e502bb161804986a}\label{main_8cpp_a6f655f04d910fcd6e502bb161804986a} 
+\index{main.cpp@{main.cpp}!xSemaphoreEnvio@{xSemaphoreEnvio}}
+\index{xSemaphoreEnvio@{xSemaphoreEnvio}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{xSemaphoreEnvio}{xSemaphoreEnvio}}
+{\footnotesize\ttfamily x\+Semaphore\+Envio}
+
+
+
+Semáforo binario para sincronización de envío de datos. 
+
+Se activa cuando ambos sensores tienen datos nuevos listos \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2fsegura_2FESQ_2SYNC_MEGA_200FESQ_SHARED_20_EC-ESP32_2CODES_2L10_21-PRJ-SystemX-V1_2src_2main_8cpp-example}{/home/fsegura/\+FESQ/\+SYNC\+\_\+\+MEGA/00\+FESQ\+\_\+\+SHARED/0\+\_\+\+EC-\/\+ESP32/\+CODES/\+L10/1-\/\+PRJ-\/\+System\+X-\/\+V1/src/main.\+cpp}}.\end{Desc}
